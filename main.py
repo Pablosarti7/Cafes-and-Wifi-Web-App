@@ -362,7 +362,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# maybe instead of submitting cafes they add qualities about that cafe
-# don't get rid of the add cafe form because this will ruin the rating system
-# adding qualities that will eventually add to the cafes db or something else that
-# can be original, be creative
