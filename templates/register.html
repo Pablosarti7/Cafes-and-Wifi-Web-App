@@ -1,0 +1,40 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %} New Cafe {% endblock %}
+
+{% block content %}
+
+{%include "navigation.html" %}
+
+<div class="container text-center">
+
+  <section>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          {{ register_form.hidden_tag() }}
+          {{ wtf.quick_form(register_form, novalidate=True, button_map={"submit": "primary"}) }}
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+{% endblock %}

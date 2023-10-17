@@ -1,0 +1,112 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %} {{name}} in {{town}}{% endblock %}
+
+
+{% block content %}
+{% include "navigation.html" %}
+
+<div>
+    <section class="container">
+        <div class="text-center">
+            <h1 class="display-4 mb-5">{{name}} in {{town}}</h1>
+        </div>
+        <div class="row">
+
+            <!-- filter column -->
+            <div class="col-sm col-md">
+                
+                    <form method="post" class="form-group">
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.has_sockets.label }}</label>
+                            {{ form.has_sockets(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.has_toilet.label }}</label>
+                            {{ form.has_toilet(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.has_wifi.label }}</label>
+                            {{ form.has_wifi(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.can_take_calls.label }}</label>
+                            {{ form.can_take_calls(class="form-control") }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.has_seats.label }}</label>
+                            {{ form.has_seats(class="form-control") }}
+                        </div>
+                        <div>
+                            {{ form.submit(class="btn") }}
+                        </div>
+                    </form>
+                
+            </div>
+
+            <!-- <div class="vertical-line"></div> -->
+
+            <!-- cafes column -->
+            <div class="col-sm col-md yellow-background" id="locations">
+                {% for cafe in cafes %}
+                {% if cafe.name == name and cafe.location == town %}
+
+                <div class="list text-center">
+                    <!-- this is a very important code -->
+                    <a href="{{ url_for('cafe', cafe_id=cafe.id) }}" data-location="{{ cafe.address }}">
+                        <div class="card-img-top">
+                            <img src="{{ cafe.img_url }}" alt="{{ cafe.name }}" style="width: 100px; height: 100px;">
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <h5 class="card-title">
+                                    {{cafe.name}}
+                                </h5>
+                            </div>
+                            <div>
+                                <p class="card-text">
+                                    {{cafe.address}}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- <div class="vertical-line"></div> -->
+
+            <!-- maps column -->
+            <div class="col-sm col-md">
+
+                <!-- Create a div where the map will be displayed -->
+                <div id="mapid"></div>
+
+            </div>
+
+        </div>
+    </section>
+</div>
+
+<!-- coffee_shops.html -->
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+{% include "footer.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+{% endblock %}

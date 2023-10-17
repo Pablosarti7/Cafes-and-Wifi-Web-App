@@ -1,0 +1,31 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Coffee and Wifi{% endblock %}
+
+{% block content %}
+
+{% include 'navigation.html' %}
+
+
+<div class="text-center jumbo">
+  <div class="container">
+
+    <h1 class="display-4">☕️ Coffee & Wifi 💻</h1>
+    <p class="lead">Want to work in a cafe but need power and wifi?</p>
+    <hr class="my-4">
+    <p>You've found the right place! Checkout my collection of cafes with data on power socket availability, wifi speed
+      and coffee quality.</p>
+    <a class="btn btn-lg" href="{{ url_for('towns') }}" role="button">Show Me!</a>
+    
+  </div>
+</div>
+
+
+{% include "footer.html" %}
+
+{% endblock %}

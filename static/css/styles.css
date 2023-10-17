@@ -1,0 +1,116 @@
+
+h2 {
+    font-weight: 300;
+}
+
+/* Make page size from top to bottom of the screen */
+.jumbo {
+    display: flex;
+    margin: 0;
+    height: 100%;
+    color: rgb(0, 0, 0);
+    background-color: #ffffff;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.list:hover {
+    background-color: #e6e6e6;
+}
+
+.list a {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit text color */
+}
+
+.card-img-top {
+    flex: 0 0 auto; /* Don't grow, don't shrink, auto basis */
+    width: 100px; /* Set a fixed width for the image container */
+}
+
+.card-img-top img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+}
+
+.card-body {
+    padding-left: 15px; /* Add some space between the image and the text */
+}
+
+
+.list a .card-img-top, .list a .card-body {
+    padding: 0.70rem;
+    flex: 1; /* Makes the children take up equal width */
+}
+
+.btn {
+    color: 'black';
+    background-color: #f9dc5c;
+}
+
+.navbar {
+    background-color: #f7f7f7 !important;
+}
+
+.bold-text {
+    font-weight: bold;
+  }
+
+.red:hover {
+    color: red;
+}
+.yellow:hover {
+    color: #fdd85d;
+}
+.green:hover {
+    color: green;
+}
+
+
+/* cafe page */
+
+/* make the form stretch the full with of the div */
+.full-width-form,
+.full-width-form textarea {
+    width: 100%;
+    box-sizing: border-box; /* This ensures padding and border are included in the element's total width and height */
+}
+
+/* town cafe page */
+
+#mapid {
+    width: 100%;
+    height: 100%; /* Adjust height as necessary before it was 100% */ 
+}
+
+.vertical-line {
+    width: 1px; /* or you can use a different width, e.g., 2px, 3px, etc. */
+    height: auto; /* or the height you prefer */
+    background-color: black; /* or the color you prefer */
+  }
+  
+.yellow-background {
+    background-color: #fdf8e1;
+}
+
+.cafe-margin {
+    padding-top: 30px;
+}
+
+/* all towns page */
+
+.all-towns-buttons {
+    margin: 1%;
+}
+
+/* footer */
+
+/* footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  } */
+  

@@ -1,0 +1,40 @@
+{% extends 'bootstrap/base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%block styles %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" />
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block title %} Towns {% endblock %}
+
+{% block content %}
+
+{% include "navigation.html" %}
+
+<div class="text-center">
+
+  <section class="container">
+
+    <h1 class="display-4">🏘️ All Towns 🔍</h1>
+
+    {% for town, cafe_names in towns_with_cafes.items() %}
+    <div>
+      <br class="my-4">
+      <h2>{{ town }}</h2>
+      <br class="my-4">
+      {% for cafe_name in cafe_names %}
+      <a class="btn btn-lg all-towns-buttons" href="{{ url_for('database', name=cafe_name, town=town) }}" role="button">{{cafe_name }}</a>
+      {% endfor %}
+      <hr class="my-4">
+    </div>
+    {% endfor %}
+
+  </section>
+
+
+</div>
+
+{% include "footer.html" %}
+
+{% endblock %}
