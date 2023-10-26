@@ -51,6 +51,9 @@ class Cafes(db.Model):
     rating = relationship("Ratings", back_populates="cafe")
     reviews = relationship("Reviews", back_populates="cafe_reviews")
 
+    def __repr__(self):
+        return f"Item('{self.name}', {self.location}, {self.address})"
+    
 
 class Ratings(db.Model):
     __tablename__ = "ratings"
@@ -83,8 +86,8 @@ class Reviews(db.Model):
     review = db.Column(db.String(500), nullable=False)
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 # forms
@@ -144,7 +147,7 @@ def home():
 @app.route('/towns')
 def towns():
     cafes = Cafes.query.all()
-    
+    print(cafes)
     towns_with_cafes = {}
     for cafe in cafes:
         town = cafe.location
