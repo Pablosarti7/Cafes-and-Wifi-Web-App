@@ -147,7 +147,7 @@ def home():
 @app.route('/towns')
 def towns():
     cafes = Cafes.query.all()
-    print(cafes)
+    
     towns_with_cafes = {}
     for cafe in cafes:
         town = cafe.location
@@ -219,33 +219,30 @@ def cafe(cafe_id):
             new_rating_three = Ratings(cafe_id=cafe_id,rating_one=coffe_shop_rating,rating_two=0,rating_three=0,submissions=0,sum_ratings=0,rating=0)
             db.session.add(new_rating_three)
             db.session.commit()
-
-    ################################
-    ################################
         
     request_rating_from_db = Ratings.query.filter_by(cafe_id=cafe_id).all()
-
+    
     sum_of_all = 0    
-
+    
     for rating in request_rating_from_db:
         sum_of_all += rating.rating_one
         sum_of_all += rating.rating_two
         sum_of_all += rating.rating_three
 
-    new_rating = sum_of_all/len(request_rating_from_db)
+    try:
+        new_rating = sum_of_all/len(request_rating_from_db)
+    except ZeroDivisionError:
+        print('ZeroDivisionError')
+        new_rating = sum_of_all/1
 
     cafe_to_update = Cafes.query.filter_by(id=cafe_id).first()
 
-    print(cafe_to_update.cafe_rating)
-
     if cafe_to_update:
+        # we are not adding but just updating the cafe_rating value of this specific cafe
         cafe_to_update.cafe_rating = new_rating
         db.session.commit()
     else:
         print(f"Cafe with ID {cafe_id} not found.")
-
-    ################################
-    ################################
 
     if review_form.validate_on_submit():
         
@@ -253,8 +250,8 @@ def cafe(cafe_id):
         db.session.add(new_comment)
         db.session.commit()
 
-    session = db.session 
-    request_cafe = session.get(Cafes, cafe_id)
+    # requesting the cafe id by opening a session and just reading it
+    request_cafe = db.session.query(Cafes).get(cafe_id)
 
     # bolding the current day of the week
     now = datetime.now()
@@ -357,5 +354,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-

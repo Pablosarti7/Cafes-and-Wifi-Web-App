@@ -23,7 +23,7 @@
         <div class="row">
 
             <!-- filter column -->
-            <div class="col-sm col-md">
+            <div class="col-sm-6 col-12 col-md-4">
                 
                     <form method="post" class="form-group">
                         {{ form.hidden_tag() }}
@@ -57,7 +57,7 @@
             <!-- <div class="vertical-line"></div> -->
 
             <!-- cafes column -->
-            <div class="col-sm col-md yellow-background" id="locations">
+            <div class="col-sm-6 yellow-background col-12 col-md-4" id="locations">
                 {% for cafe in cafes %}
                 {% if cafe.name == name and cafe.location == town %}
 
@@ -89,7 +89,7 @@
             <!-- <div class="vertical-line"></div> -->
 
             <!-- maps column -->
-            <div class="col-sm col-md">
+            <div class="col-sm-6 col-12 col-md-4">
 
                 <!-- Create a div where the map will be displayed -->
                 <div id="mapid"></div>
