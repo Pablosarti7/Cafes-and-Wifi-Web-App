@@ -11,17 +11,17 @@ from wtforms.validators import URL, DataRequired
 from datetime import datetime
 
 
-application = Flask(__name__)
-application.secret_key = os.urandom(24)
-Bootstrap(application)
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+Bootstrap(app)
 
 
-application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
-db = SQLAlchemy(application)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cafes.db'
+db = SQLAlchemy(app)
 
 
 login_manager = LoginManager()
-login_manager.init_application(application)
+login_manager.init_app(app)
 
 
 @login_manager.user_loader
@@ -29,7 +29,7 @@ def load_user(user_id):
     return Users.query.get(user_id)
 
 
-application.application_context().push()
+app.app_context().push()
 
 
 # your databases
@@ -86,7 +86,7 @@ class Reviews(db.Model):
     review = db.Column(db.String(500), nullable=False)
 
 
-# with application.application_context():
+# with app.app_context():
 #     db.create_all()
 
 
@@ -138,13 +138,13 @@ class ReviewForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-@application.route('/')
+@app.route('/')
 def home():
 
     return render_template('index.html', logged_in=current_user.is_authenticated)
 
 
-@application.route('/towns')
+@app.route('/towns')
 def towns():
     cafes = Cafes.query.all()
     
@@ -158,7 +158,7 @@ def towns():
     return render_template('all_towns.html', towns_with_cafes=towns_with_cafes, logged_in=current_user.is_authenticated)
 
 
-@application.route('/database/<name>/<town>', methods=['GET', 'POST'])
+@app.route('/database/<name>/<town>', methods=['GET', 'POST'])
 def database(name, town):
     form = FilterForm()
 
@@ -193,7 +193,7 @@ def database(name, town):
     return render_template('town_cafe.html', cafes=all_cafes, name=name, town=town, form=form)
 
 
-@application.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
+@app.route('/cafe/<int:cafe_id>', methods=['GET', 'POST'])
 def cafe(cafe_id):
     rating_form = RatingForm()
     review_form = ReviewForm()
@@ -260,7 +260,7 @@ def cafe(cafe_id):
     return render_template('cafe.html', cafe=request_cafe, all_reviews=request_review, day_name=day_name, rating_form=rating_form, review_form=review_form, new_cafee=new_cafe, logged_in=current_user.is_authenticated)
 
 
-@application.route('/add-cafe', methods=['GET', 'POST'])
+@app.route('/add-cafe', methods=['GET', 'POST'])
 @login_required
 def add_cafe():
     new_cafe = NewCafeForm()
@@ -290,7 +290,7 @@ def add_cafe():
     return render_template('add_cafe.html', new_cafee=new_cafe, logged_in=current_user.is_authenticated)
 
 
-@application.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
@@ -321,7 +321,7 @@ def register():
     return render_template('register.html', register_form=register_form, logged_in=current_user.is_authenticated)
 
 
-@application.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
@@ -345,7 +345,7 @@ def login():
     return render_template('login.html', login_form=login_form, logged_in=current_user.is_authenticated)
 
 
-@application.route('/logout')
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -353,4 +353,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    application.run(debug=True)
+    app.run(debug=True)
